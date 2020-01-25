@@ -1,0 +1,23 @@
+= form_with(model: task, local: true) do |form|
+
+  .field
+    = form.label :title
+    = form.text_field :title, class: 'form-control'
+
+  .field
+    = form.label :content
+    = form.text_field :content, class: 'form-control'
+
+  .field
+    = form.label :deadline
+    = form.datetime_field :deadline, class: 'form-control'
+
+  .field
+    = form.label :status
+    = form.number_field :status, class: 'form-control'
+
+  .field
+    = form.label :priority
+    = form.number_field :priority, class: 'form-control'
+
+= link_to 'タスク一覧へ戻る', tasks_path
