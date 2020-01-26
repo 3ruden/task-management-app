@@ -8,23 +8,23 @@ p
 
 p
   strong タスク詳細
-  = @task.title
+  = @task.content
 
 p
   strong 終了期限
-  = @task.title
-
+  = @task.deadline.strftime("%Y年%m月%d日 %H時%M分")
 p
   strong 状態
-  = @task.title
+  = @task.status
 
 p
   strong 優先順位
-  = @task.title
+  = @task.priority
 
 p
   strong 作成者
   = 'testman'
 
 = link_to '編集', edit_task_path(@task)
+span &nbsp;|&nbsp;
 = link_to 'タスク一覧へ戻る', tasks_path
