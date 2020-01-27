@@ -16,7 +16,7 @@
     = form.label :status
 
     .raido_inline
-      = form.radio_button :status, :not_started_yet, checked: "checked"
+      = form.radio_button :status, :not_started_yet, checked: 'checked'
       = form.label :not_started_yet
 
     .raido_inline
@@ -31,7 +31,7 @@
     = form.label :priority
 
     .raido_inline
-      = form.radio_button :priority, :low, checked: "checked"
+      = form.radio_button :priority, :low, checked: 'checked'
       = form.label :low
 
     .raido_inline
@@ -39,7 +39,7 @@
       = form.label :medium
 
     .raido_inline
-      = form.radio_button :status, :high
+      = form.radio_button :priority, :high
       = form.label :high
 
   .actions
