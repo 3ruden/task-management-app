@@ -45,3 +45,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # slimを導入
 gem 'slim-rails'
 gem 'html2slim'
+
+# enumをI18nに適用
+gem 'enum_help'

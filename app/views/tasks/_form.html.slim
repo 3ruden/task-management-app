@@ -17,30 +17,27 @@
 
     .raido_inline
       = form.radio_button :status, :not_started_yet, checked: 'checked'
-      = form.label :not_started_yet
-
+      = form.label Task.statuses_i18n[:not_started_yet]
     .raido_inline
       = form.radio_button :status, :get_started
-      = form.label :get_started
+      = form.label Task.statuses_i18n[:get_started]
 
     .raido_inline
-      = form.radio_button :status, :finished
-      = form.label :finished
+      = form.radio_button :status, Task.statuses_i18n[:finished]
+      = form.label Task.statuses_i18n[:finished]
 
   .field
     = form.label :priority
 
     .raido_inline
       = form.radio_button :priority, :low, checked: 'checked'
-      = form.label :low
-
+      = form.label Task.priorities_i18n[:low]
     .raido_inline
       = form.radio_button :priority, :medium
-      = form.label :medium
-
+      = form.label Task.priorities_i18n[:medium]
     .raido_inline
       = form.radio_button :priority, :high
-      = form.label :high
+      = form.label Task.priorities_i18n[:high]
 
   .actions
     = form.submit

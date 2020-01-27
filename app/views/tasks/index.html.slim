@@ -19,8 +19,8 @@ table
         td = task.title
         td = task.content
         td = task.deadline.strftime("%Y年%m月%d日 %H時%M分")
-        td = task.status
-        td = task.priority
+        td = task.status_i18n
+        td = task.priority_i18n
         td = 'testman'
         td = link_to '詳細', task
         td = link_to '編集', edit_task_path(task)

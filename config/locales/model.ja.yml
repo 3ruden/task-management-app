@@ -1,0 +1,29 @@
+ja:
+  activerecord:
+    models:
+      task: タスク
+      user: ユーザー
+    attributes:
+      task:
+        title: タスク名
+        content: タスク詳細
+        deadline: 終了期限
+        status: 状態
+        priority: 優先順位
+      user:
+        name: 名前
+        email: メールアドレス
+        current_password: 現在のパスワード
+        password: パスワード
+        password_confirmation: 確認用パスワード
+        remember_me: ログインを記憶
+  enums:
+    task:
+      status:
+        not_started_yet: 未着手
+        get_started: 着手
+        finished: 完了
+      priority:
+        low: 低
+        medium: 中
+        high: 高
