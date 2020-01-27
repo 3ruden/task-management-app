@@ -1,0 +1,30 @@
+h3 = notice
+
+h1 タスク詳細
+
+p
+  strong タスク名
+  = @task.title
+
+p
+  strong タスク詳細
+  = @task.content
+
+p
+  strong 終了期限
+  = @task.deadline.strftime("%Y年%m月%d日 %H時%M分")
+p
+  strong 状態
+  = @task.status
+
+p
+  strong 優先順位
+  = @task.priority
+
+p
+  strong 作成者
+  = 'testman'
+
+= link_to '編集', edit_task_path(@task)
+span &nbsp;|&nbsp;
+= link_to 'タスク一覧へ戻る', tasks_path

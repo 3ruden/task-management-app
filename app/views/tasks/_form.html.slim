@@ -1,0 +1,48 @@
+= form_with(model: task, local: true) do |form|
+
+  .field
+    = form.label :title
+    = form.text_field :title, class: 'form-control'
+
+  .field
+    = form.label :content
+    = form.text_field :content, class: 'form-control'
+
+  .field
+    = form.label :deadline
+    = form.datetime_field :deadline, class: 'form-control'
+
+  .field
+    = form.label :status
+
+    .raido_inline
+      = form.radio_button :status, :not_started_yet, checked: 'checked'
+      = form.label :not_started_yet
+
+    .raido_inline
+      = form.radio_button :status, :get_started
+      = form.label :get_started
+
+    .raido_inline
+      = form.radio_button :status, :finished
+      = form.label :finished
+
+  .field
+    = form.label :priority
+
+    .raido_inline
+      = form.radio_button :priority, :low, checked: 'checked'
+      = form.label :low
+
+    .raido_inline
+      = form.radio_button :priority, :medium
+      = form.label :medium
+
+    .raido_inline
+      = form.radio_button :priority, :high
+      = form.label :high
+
+  .actions
+    = form.submit
+
+= link_to 'タスク一覧へ戻る', tasks_path

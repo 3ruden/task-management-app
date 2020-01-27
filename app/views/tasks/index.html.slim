@@ -1,0 +1,29 @@
+h3 = notice
+
+h1 タスク一覧
+
+table
+  thead
+    tr
+      th タスク名
+      th タスク詳細
+      th 終了期限
+      th 状態
+      th 優先順位
+      th 作成者
+      th colspan="3"
+
+  tbody
+    - @tasks.each do |task|
+      tr
+        td = task.title
+        td = task.content
+        td = task.deadline.strftime("%Y年%m月%d日 %H時%M分")
+        td = task.status
+        td = task.priority
+        td = 'testman'
+        td = link_to '詳細', task
+        td = link_to '編集', edit_task_path(task)
+        td = link_to '削除', task, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }
+
+= link_to 'タスクを作成する', new_task_path
