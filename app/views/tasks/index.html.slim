@@ -2,6 +2,20 @@ h3 = notice
 
 h1 タスク一覧
 
+.search-form
+  = form_with(model: Task.new, local: true, method: :get) do |form|
+    .field
+      = form.label :title
+      = form.text_field :title_search
+
+    .field
+      = form.label :status
+      = form.select :status_search, Task.statuses_i18n.invert, include_blank: true
+
+    = form.submit "検索する"
+
+= link_to '期限順に並べる', '?sort_deadline=true'
+
 table
   thead
     tr

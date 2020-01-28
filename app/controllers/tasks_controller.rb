@@ -2,7 +2,19 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i(show edit update destroy)
 
   def index
-    @tasks = Task.all.order(created_at: :DESC)
+    if params[:task]
+      title_search = params[:task][:title_search]
+      status_search = params[:task][:status_search]
+      @tasks = Task.get_search_result(title_search, status_search)
+    else
+      @tasks = Task.all
+    end
+
+    if params[:sort_deadline]
+      @tasks = @tasks.order(:deadline)
+    else
+      @tasks = @tasks.order(created_at: :DESC)
+    end
   end
 
   def show
