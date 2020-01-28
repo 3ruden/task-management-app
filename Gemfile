@@ -48,3 +48,6 @@ gem 'html2slim'
 
 # enumをI18nに適用
 gem 'enum_help'
+
+# 環境変数を環境ごとに管理する
+gem 'dotenv-rails'
