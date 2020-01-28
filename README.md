@@ -53,3 +53,22 @@
 |id|bigint|
 |name|string|
 
+## herokuへのデプロイ手順
+1. Herokuにログインする
+
+`heroku login`
+
+2. コミットする
+
+`git add -A`
+
+`git commmit -m "init"`
+
+3. Herokuに新しいアプリケーションを作成
+
+`heroku create`
+
+4. herokuにデプロイをする
+
+`git push heroku master`
+
