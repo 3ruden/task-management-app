@@ -12,6 +12,8 @@ class TasksController < ApplicationController
 
     if params[:sort_deadline]
       @tasks = @tasks.order(:deadline)
+    elsif params[:sort_priority]
+      @tasks = @tasks.order(priority: :DESC)
     else
       @tasks = @tasks.order(created_at: :DESC)
     end

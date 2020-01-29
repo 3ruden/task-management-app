@@ -37,6 +37,15 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
 
+    context '優先度の高い順に並べるボタンをクリックした場合' do
+      it 'タスクが優先度の高い順に並んでいること' do
+        click_on '期限順に並べる'
+        task_list = all('.task_row')
+        expect(task_list[0]).to have_content '高'
+        expect(task_list[1]).to have_content '低'
+      end
+    end
+
     context 'タスク名を検索した場合' do
       it '検索したタスク名のみのレコードが表示される' do
         fill_in 'task_title_search', with: 'テストを書く'
@@ -50,7 +59,8 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '検索したタスクの状態のみのレコードが表示される' do
         select '完了', from: 'task_status_search'
         click_on '検索する'
-        expect(page).to have_content 'テストを書く'
+        task_list = all('.task_row')
+        expect(task_list[0]).to have_content '完了'
         expect(page).not_to have_content 'test2'
       end
     end
