@@ -6,4 +6,12 @@ FactoryBot.define do
     status { :finished }
     priority { :high }
   end
+
+  factory :second_task, class: Task do
+    title { 'test2' }
+    content { 'RSpec & Capybara & FactoryBotを準備するその２' }
+    deadline { Time.current.next_month }
+    status { :get_started }
+    priority { :low }
+  end
 end
