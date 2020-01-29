@@ -51,3 +51,6 @@ gem 'enum_help'
 
 # 環境変数を環境ごとに管理する
 gem 'dotenv-rails'
+
+# ページネーションを追加
+gem 'kaminari'
