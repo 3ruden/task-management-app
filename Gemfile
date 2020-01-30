@@ -45,3 +45,12 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # slimを導入
 gem 'slim-rails'
 gem 'html2slim'
+
+# enumをI18nに適用
+gem 'enum_help'
+
+# 環境変数を環境ごとに管理する
+gem 'dotenv-rails'
+
+# ページネーションを追加
+gem 'kaminari'

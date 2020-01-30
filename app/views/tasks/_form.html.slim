@@ -1,48 +1,50 @@
 = form_with(model: task, local: true) do |form|
+  - if task.errors.present?
+    .alert.alert-dander.alert-dismissible role="alert"
+      |<h2>#{task.errors.count}件のエラーがあります。</h2>
+      ul
+        - task.errors.full_messages.each do |message|
+          li = message
 
-  .field
-    = form.label :title
+  .form-group
+    legend = form.label :title
     = form.text_field :title, class: 'form-control'
 
-  .field
-    = form.label :content
-    = form.text_field :content, class: 'form-control'
+  .form-group
+    legend = form.label :content
+    = form.text_area :content, class: 'form-control'
 
-  .field
-    = form.label :deadline
+  .form-group
+    legend = form.label :deadline
     = form.datetime_field :deadline, class: 'form-control'
 
-  .field
-    = form.label :status
+  .form-group
+    legend = form.label :status
 
-    .raido_inline
-      = form.radio_button :status, :not_started_yet, checked: 'checked'
-      = form.label :not_started_yet
+    .form-check.form-check-inline
+      = form.radio_button :status, :not_started_yet, checked: 'checked', class: 'form-check-input'
+      = form.label Task.statuses_i18n[:not_started_yet], class: 'form-check-label'
+    .form-check.form-check-inline
+      = form.radio_button :status, :get_started, class: 'form-check-input'
+      = form.label Task.statuses_i18n[:get_started], class: 'form-check-label'
 
-    .raido_inline
-      = form.radio_button :status, :get_started
-      = form.label :get_started
+    .form-check.form-check-inline
+      = form.radio_button :status, :finished, class: 'form-check-input'
+      = form.label Task.statuses_i18n[:finished], class: 'form-check-label'
 
-    .raido_inline
-      = form.radio_button :status, :finished
-      = form.label :finished
+  .form-group
+    legend = form.label :priority
 
-  .field
-    = form.label :priority
+    .form-check.form-check-inline
+      = form.radio_button :priority, :low, checked: 'checked', class: 'form-check-input'
+      = form.label Task.priorities_i18n[:low], class: 'form-check-label'
+    .form-check.form-check-inline
+      = form.radio_button :priority, :medium, class: 'form-check-input'
+      = form.label Task.priorities_i18n[:medium], class: 'form-check-label'
+    .form-check.form-check-inline
+      = form.radio_button :priority, :high, class: 'form-check-input'
+      = form.label Task.priorities_i18n[:high], class: 'form-check-label'
 
-    .raido_inline
-      = form.radio_button :priority, :low, checked: 'checked'
-      = form.label :low
-
-    .raido_inline
-      = form.radio_button :priority, :medium
-      = form.label :medium
-
-    .raido_inline
-      = form.radio_button :priority, :high
-      = form.label :high
-
-  .actions
-    = form.submit
+  = form.submit class: 'btn btn-outline-success'
 
 = link_to 'タスク一覧へ戻る', tasks_path
