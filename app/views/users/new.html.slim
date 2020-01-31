@@ -9,15 +9,15 @@ h1 新規登録
           li = message
 
   .input-group
-    = form.text_field :name, class: 'form-control', placeholder: :name
+    = form.text_field :name, class: 'form-control', placeholder: '名前'
 
   .input-group
-    = form.email_field :email, class: 'form-control', placeholder: :email
+    = form.email_field :email, class: 'form-control', placeholder: 'メールアドレス'
 
   .input-group
-    = form.password_field :password, class: 'form-control', placeholder: :password
+    = form.password_field :password, class: 'form-control', placeholder: 'パスワード'
 
   .input-group
-    = form.password_field :password_confirmation, class: 'form-control', placeholder: :password_confirmation
+    = form.password_field :password_confirmation, class: 'form-control', placeholder: 'パスワード確認'
 
-  = form.submit class: 'btn-primary'
+  = form.submit class: 'btn btn-primary'

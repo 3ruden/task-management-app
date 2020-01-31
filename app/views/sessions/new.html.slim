@@ -5,9 +5,9 @@ h1 ログイン
     h3 = content_tag(:div, message, class: "#{key}")
 
   .input-group
-    = form.email_field :email, class: 'form-control', placeholder: :email
+    = form.email_field :email, class: 'form-control', placeholder: 'メールアドレス'
 
   .input-group
-    = form.password_field :password, class: 'form-control', placeholder: :password
+    = form.password_field :password, class: 'form-control', placeholder:'パスワード'
 
   = form.submit 'ログインする', class: 'btn btn-primary'
