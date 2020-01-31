@@ -1,0 +1,13 @@
+h1 ログイン
+
+= form_with(scope: :session, url: sessions_path, local: true) do |form|
+  - flash.each do |key, message|
+    h3 = content_tag(:div, message, class: "#{key}")
+
+  .input-group
+    = form.email_field :email, class: 'form-control', placeholder: :email
+
+  .input-group
+    = form.password_field :password, class: 'form-control', placeholder: :password
+
+  = form.submit 'ログインする', class: 'btn btn-primary'

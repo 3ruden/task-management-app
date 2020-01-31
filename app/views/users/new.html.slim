@@ -1,0 +1,23 @@
+h1 新規登録
+
+= form_with(model: @user, local: true) do |form|
+  - if @user.errors.present?
+    .alert.alert-danger role="alert"
+      |<h2>#{@user.errors.count}件のエラーがあります。</h2>
+      ul
+        - @user.errors.full_messages.each do |message|
+          li = message
+
+  .input-group
+    = form.text_field :name, class: 'form-control', placeholder: :name
+
+  .input-group
+    = form.email_field :email, class: 'form-control', placeholder: :email
+
+  .input-group
+    = form.password_field :password, class: 'form-control', placeholder: :password
+
+  .input-group
+    = form.password_field :password_confirmation, class: 'form-control', placeholder: :password_confirmation
+
+  = form.submit class: 'btn-primary'

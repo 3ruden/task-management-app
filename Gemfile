@@ -54,3 +54,8 @@ gem 'dotenv-rails'
 
 # ページネーションを追加
 gem 'kaminari'
+
+# セキュアパスワードを設定
+gem 'bcrypt'
+
+gem 'faker'
