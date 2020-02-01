@@ -31,6 +31,8 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  # N+1問題を検出
+  gem 'bullet'
 end
 
 group :test do
@@ -58,4 +60,5 @@ gem 'kaminari'
 # セキュアパスワードを設定
 gem 'bcrypt'
 
+# ダミーデータを生成
 gem 'faker'

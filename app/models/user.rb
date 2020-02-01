@@ -1,13 +1,17 @@
 class User < ApplicationRecord
-  validates_presence_of :name, :email, :password
-  validates :name, length: { maximum: 30 }
+  validates :name, presence: true, length: { maximum: 30 }
   validates :email,
+    presence: true,
     length: { maximum: 255 },
     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
     uniqueness: true
   before_validation { email.downcase! }
   has_secure_password
-  validates :password, length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 6 }, on: :create
 
   has_many :tasks, dependent: :destroy
+
+  before_destroy do
+    throw :abort if User.where(admin: true).count == 1 && self.admin
+  end
 end

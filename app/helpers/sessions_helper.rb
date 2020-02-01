@@ -14,4 +14,5 @@ module SessionsHelper
   def forbid_login_user
     redirect_to tasks_url if logged_in?
   end
+
 end
