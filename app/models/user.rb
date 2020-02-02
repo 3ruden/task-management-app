@@ -14,4 +14,8 @@ class User < ApplicationRecord
   before_destroy do
     throw :abort if User.where(admin: true).count == 1 && self.admin
   end
+
+  def admin_last_one?(params_admin)
+    User.where(admin: true).count == 1 && self.admin && ActiveRecord::Type::Boolean.new.cast(params_admin).blank?
+  end
 end

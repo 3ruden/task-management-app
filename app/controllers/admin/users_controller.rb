@@ -24,7 +24,9 @@ class Admin::UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params)
+    if @user.admin_last_one?(user_params[:admin])
+      redirect_to edit_admin_user_url, notice: '管理者がいなくなるため、権限を削除できません'
+    elsif @user.update(user_params)
       redirect_to admin_users_url, notice: 'ユーザーを編集しました'
     else
       render :edit

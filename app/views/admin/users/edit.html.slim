@@ -1,6 +1,10 @@
 h1 ユーザー編集 - 管理者用
 
 = form_with(model: [:admin, @user], local: true) do |form|
+  - if notice.present?
+    .alert.alert-secondary.mt-5
+      h3 = notice
+
   - if @user.errors.present?
     .alert.alert-dander.alert-dismissible role="alert"
       |<h2>#{@user.errors.count}件のエラーがあります。</h2>
