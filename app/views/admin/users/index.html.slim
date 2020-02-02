@@ -1,0 +1,26 @@
+- if notice.present?
+  .alert.alert-secondary.mt-5
+    h3 = notice
+
+h1 ユーザー一覧 - 管理者用
+
+table class="table"
+  thead
+    tr
+      th scope="col" 名前
+      th scope="col" 管理者権限
+      th scope="col" タスク数
+      th scope="col" colspan="3"
+
+  tbody
+    - @users.each do |user|
+      tr
+        td = user.name
+        td = user.admin ? 'あり' : ''
+        td = user.tasks.count
+        td = link_to 'タスク一覧', tasks_path(user_id: user.id), class: 'task_index_link'
+        td = link_to '編集', edit_admin_user_path(user), class: 'user_edit_link'
+        td = link_to '削除', admin_user_path(user), method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }, class: 'user_destroy_link'
+
+= link_to 'ユーザーを作成する', new_admin_user_path
+

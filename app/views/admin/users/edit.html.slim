@@ -1,0 +1,43 @@
+h1 ユーザー編集 - 管理者用
+
+= form_with(model: [:admin, @user], local: true) do |form|
+  - if notice.present?
+    .alert.alert-secondary.mt-5
+      h3 = notice
+
+  - if @user.errors.present?
+    .alert.alert-dander.alert-dismissible role="alert"
+      |<h2>#{@user.errors.count}件のエラーがあります。</h2>
+      ul
+        - @user.errors.full_messages.each do |message|
+          li = message
+
+  .form-group
+    legend = form.label :name
+    = form.text_field :name, class: 'form-control'
+
+  .form-group
+    legend = form.label :email
+    = form.email_field :email, class: 'form-control'
+
+  .form-group
+    legend = form.label :password
+    small パスワードは変更がなければ記入しないでください
+    = form.password_field :password, class: 'form-control'
+
+  .form-group
+    legend = form.label :password_confirmation
+    = form.password_field :password_confirmation, class: 'form-control'
+
+  .form_group
+    .form-check.form-check-inline
+      - if @user.admin?
+        = form.check_box :admin, {class: 'form-check-input'}, false, true
+        label class="form-check-label" for="user_admin" 管理者権限を削除
+      - else
+        = form.check_box :admin, {class: 'form-check-input'}, true, false
+        label class="form-check-label" for="user_admin" 管理者権限を付与
+
+  = form.submit class: 'btn btn-outline-success mt-3'
+
+= link_to 'ユーザ一覧へ戻る', admin_users_path

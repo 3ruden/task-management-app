@@ -1,0 +1,35 @@
+h1 ユーザー作成
+
+= form_with(model: [:admin, @user], local: true) do |form|
+  - if @user.errors.present?
+    .alert.alert-dander.alert-dismissible role="alert"
+      |<h2>#{@user.errors.count}件のエラーがあります。</h2>
+      ul
+        - @user.errors.full_messages.each do |message|
+          li = message
+
+  .form-group
+    legend = form.label :name
+    = form.text_field :name, class: 'form-control'
+
+  .form-group
+    legend = form.label :email
+    = form.email_field :email, class: 'form-control'
+
+  .form-group
+    legend = form.label :password
+    = form.password_field :password, class: 'form-control'
+
+  .form-group
+    legend = form.label :password_confirmation
+    = form.password_field :password_confirmation, class: 'form-control'
+
+  .form_group
+    legend = form.label :admin
+    .form-check.form-check-inline
+      = form.check_box :admin, {class: 'form-check-input'}, true, false
+      label class="form-check-label" for="user_admin" あり
+
+  = form.submit class: 'btn btn-outline-success mt-3'
+
+= link_to 'ユーザ一覧へ戻る', admin_users_path
