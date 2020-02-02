@@ -17,6 +17,4 @@ class Task < ApplicationRecord
   scope :get_search_result, -> (title_search, status_search) {
     get_search_title(title_search).get_search_status(status_search)
   }
-
-  belongs_to :user
 end

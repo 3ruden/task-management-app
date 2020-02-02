@@ -7,7 +7,3 @@
 .table td {
   word-break: break-all;
 }
-
-.field_with_errors {
-  display: contents;
-}

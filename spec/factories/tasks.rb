@@ -5,7 +5,6 @@ FactoryBot.define do
     deadline { Time.current }
     status { :finished }
     priority { :high }
-    user_id { 1 }
   end
 
   factory :second_task, class: Task do
@@ -14,6 +13,5 @@ FactoryBot.define do
     deadline { Time.current.next_month }
     status { :get_started }
     priority { :low }
-    user_id { 2 }
   end
 end

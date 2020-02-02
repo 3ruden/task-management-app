@@ -2,25 +2,20 @@
   .alert.alert-success.mt-5
     h3 = notice
 
-- if @flag
-  h1 タスク一覧 - 管理者用
+h1 タスク一覧
 
-- else
-  h1 タスク一覧
+.container
+  .row
+    = form_with(model: Task.new, local: true, method: :get, html: {class: "col-md-12 col-lg-5"}) do |form|
+      .row
+        = form.text_field :title_search, class: "form-control col-6", placeholder: "タスク名を入力"
 
-  .container
-    .row
-      = form_with(model: Task.new, local: true, method: :get, html: {class: "col-md-12 col-lg-5"}) do |form|
-        .row
-          = form.text_field :title_search, class: "form-control col-6", placeholder: "タスク名を入力"
+        = form.select :status_search, Task.statuses_i18n.invert, {include_blank: "状態を選択"}, class: "form-control col-3"
 
-          = form.select :status_search, Task.statuses_i18n.invert, {include_blank: "状態を選択"}, class: "form-control col-3"
+        = form.submit "検索する", class: "btn btn-outline-success col-3"
 
-          = form.submit "検索する", class: "btn btn-outline-success col-3"
-
-      = link_to '期限順に並べる', '?sort_deadline=true', class: "btn btn-warning col-md-6  col-lg-3 offset-lg-1"
-      = link_to '優先度の高い順で並べる', '?sort_priority=true', class: "btn btn-info col-md-6 col-lg-3"
-
+    = link_to '期限順に並べる', '?sort_deadline=true', class: "btn btn-warning col-md-6  col-lg-3 offset-lg-1"
+    = link_to '優先度の高い順で並べる', '?sort_priority=true', class: "btn btn-info col-md-6 col-lg-3"
 
 table class="table"
   thead
@@ -41,15 +36,12 @@ table class="table"
         td = task.deadline.strftime("%Y年%m月%d日 %H時%M分")
         td = task.status_i18n
         td = task.priority_i18n
-        td = task.user.name
-        - unless @flag
-          td = link_to '詳細', task
-          td = link_to '編集', edit_task_path(task)
-          td = link_to '削除', task, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }
+        td = 'testman'
+        td = link_to '詳細', task
+        td = link_to '編集', edit_task_path(task)
+        td = link_to '削除', task, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }
 
 = paginate @tasks
 
-- if @flag
-  = link_to 'ユーザー一覧へ戻る', admin_users_path
-- else
-  = link_to 'タスクを作成する', new_task_path
+= link_to 'タスクを作成する', new_task_path
+
