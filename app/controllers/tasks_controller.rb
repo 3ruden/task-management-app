@@ -46,6 +46,7 @@ class TasksController < ApplicationController
   end
 
   def update
+    binding.pry
     if @task.update(task_params)
       redirect_to @task, notice: 'タスクを編集しました'
     else
@@ -71,6 +72,7 @@ class TasksController < ApplicationController
       :deadline,
       :status,
       :priority,
+      label_ids: [],
     )
   end
 

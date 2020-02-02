@@ -45,6 +45,13 @@
       = form.radio_button :priority, :high, class: 'form-check-input'
       = form.label Task.priorities_i18n[:high], class: 'form-check-label'
 
+  .form-group
+    legend ラベル
+    - Label.all.each do |label|
+      .form-check.form-check-inline
+        = form.check_box :label_ids, { multiple: true, checked: task.labels.where(id: label.id).present?, include_hidden: false }, label[:id], class: 'form-check-input'
+        label class='form-check-label' = label.name
+
   = form.submit class: 'btn btn-outline-success'
 
 = link_to 'タスク一覧へ戻る', tasks_path
