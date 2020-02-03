@@ -4,10 +4,10 @@ class TasksController < ApplicationController
 
   def index
     if params[:user_id]
-      @tasks = Task.where(user_id: params[:user_id]).includes(:user).page(params[:page]).per(5)
+      @tasks = Task.where(user_id: params[:user_id]).page(params[:page]).per(10)
       @flag = true
     else
-      @tasks = current_user.tasks.all.page(params[:page]).per(5)
+      @tasks = current_user.tasks.page(params[:page]).per(10)
     end
 
     if params[:sort_deadline]
@@ -21,7 +21,8 @@ class TasksController < ApplicationController
     if params[:task]
       title_search = params[:task][:title_search]
       status_search = params[:task][:status_search]
-      @tasks = @tasks.get_search_result(title_search, status_search)
+      label_id = params[:task][:label_id]
+      @tasks = @tasks.get_search_result(title_search, status_search, label_id).page(params[:page]).per(10)
     end
 
   end
@@ -46,7 +47,6 @@ class TasksController < ApplicationController
   end
 
   def update
-    binding.pry
     if @task.update(task_params)
       redirect_to @task, notice: 'タスクを編集しました'
     else

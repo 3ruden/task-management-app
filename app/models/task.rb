@@ -14,8 +14,13 @@ class Task < ApplicationRecord
     where(status: status_search)
   }
 
-  scope :get_search_result, -> (title_search, status_search) {
-    get_search_title(title_search).get_search_status(status_search)
+  scope :get_search_label, -> (label_id) {
+    return if label_id.blank?
+    joins(:labels).where(labels: {id: label_id})
+  }
+
+  scope :get_search_result, -> (title_search, status_search, label_id) {
+    get_search_title(title_search).get_search_status(status_search).get_search_label(label_id)
   }
 
   belongs_to :user

@@ -10,15 +10,17 @@
 
   .container
     .row
-      = form_with(model: Task.new, local: true, method: :get, html: {class: "col-md-12 col-lg-5"}) do |form|
+      = form_with(model: Task.new, local: true, method: :get, html: {class: "col-md-12 col-lg-6"}) do |form|
         .row
-          = form.text_field :title_search, class: "form-control col-6", placeholder: "タスク名を入力"
+          = form.text_field :title_search, class: "form-control col-3", placeholder: "タスク名を入力"
 
           = form.select :status_search, Task.statuses_i18n.invert, {include_blank: "状態を選択"}, class: "form-control col-3"
 
-          = form.submit "検索する", class: "btn btn-outline-success col-3"
+          = form.select :label_id, Label.pluck(:name, :id), {include_blank: "ラベルを選択"}, class: "form-control col-4"
 
-      = link_to '期限順に並べる', '?sort_deadline=true', class: "btn btn-warning col-md-6  col-lg-3 offset-lg-1"
+          = form.submit "検索する", class: "btn btn-outline-success col-2"
+
+      = link_to '期限順に並べる', '?sort_deadline=true', class: "btn btn-warning col-md-6  col-lg-2 offset-lg-1"
       = link_to '優先度の高い順で並べる', '?sort_priority=true', class: "btn btn-info col-md-6 col-lg-3"
 
 
@@ -30,17 +32,22 @@ table class="table"
       th scope="col" 終了期限
       th scope="col" 状態
       th scope="col" 優先順位
+      th scope="col" ラベル
       th scope="col" 作成者
       th scope="col" colspan="3"
 
   tbody
-    - @tasks.each do |task|
+    - @tasks.includes(:labels,:task_labels).each do |task|
       tr class="task_row"
         td = task.title
         td = task.content.truncate(10)
         td = task.deadline.strftime("%Y年%m月%d日 %H時%M分")
         td = task.status_i18n
         td = task.priority_i18n
+        td
+          - task.labels.each do |label|
+            span = label.name
+            br
         td = task.user.name
         - unless @flag
           td = link_to '詳細', task
