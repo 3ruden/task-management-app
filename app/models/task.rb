@@ -19,8 +19,19 @@ class Task < ApplicationRecord
     joins(:labels).where(labels: {id: label_id})
   }
 
-  scope :get_search_result, -> (title_search, status_search, label_id) {
-    get_search_title(title_search).get_search_status(status_search).get_search_label(label_id)
+  scope :search_result, -> (title_search, status_search, label_id, page_params) {
+    get_search_title(title_search).
+    get_search_status(status_search).
+    get_search_label(label_id).
+    page10(page_params)
+  }
+
+  scope :page10, -> (page_params) {
+    page(page_params).per(10)
+  }
+
+  scope :seen_by_admin, -> (user_id_params, page_params) {
+    where(user_id: user_id_params).page10(page_params).includes(:user)
   }
 
   belongs_to :user

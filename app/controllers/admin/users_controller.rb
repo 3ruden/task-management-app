@@ -16,7 +16,8 @@ class Admin::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to admin_users_url, notice: 'ユーザーを作成しました'
+      redirect_to admin_users_url,
+        notice: 'ユーザーを作成しました'
     else
       render :new
     end
@@ -25,9 +26,11 @@ class Admin::UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.admin_last_one?(user_params[:admin])
-      redirect_to edit_admin_user_url, notice: '管理者がいなくなるため、権限を削除できません'
+      redirect_to edit_admin_user_url,
+        notice: '管理者がいなくなるため、権限を削除できません'
     elsif @user.update(user_params)
-      redirect_to admin_users_url, notice: 'ユーザーを編集しました'
+      redirect_to admin_users_url,
+        notice: 'ユーザーを編集しました'
     else
       render :edit
     end
@@ -35,20 +38,27 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     if @user.destroy
-      redirect_to admin_users_url, notice: 'ユーザーを削除しました'
+      redirect_to admin_users_url,
+        notice: 'ユーザーを削除しました'
     else
-      redirect_to admin_users_url, notice: '管理者がなくなるため、削除できません'
+      redirect_to admin_users_url,
+        notice: '管理者がなくなるため、削除できません'
     end
   end
 
   private
 
   def admin_user
-    redirect_to root_path unless current_user.present? && current_user.admin.present?
+    redirect_to root_path unless current_user.is_admin_user?
   end
 
   def user_params
-    params.require(:user).permit( :name, :email, :password, :password_confirmation, :admin)
+    params.require(:user).permit(
+      :name,
+      :email,
+      :password,
+      :password_confirmation, :admin
+    )
   end
 
   def set_user
