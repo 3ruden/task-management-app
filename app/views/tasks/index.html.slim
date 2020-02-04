@@ -10,7 +10,7 @@
 
   .container
     .row
-      = form_with(model: Task.new, local: true, method: :get, html: {class: "col-md-12 col-lg-6"}) do |form|
+      = form_with(url: tasks_path, local: true, method: :get, html: {class: "col-md-12 col-lg-6"}) do |form|
         .row
           = form.text_field :title_search, class: "form-control col-3", placeholder: "タスク名を入力"
 
@@ -19,9 +19,8 @@
           = form.select :label_id, Label.pluck(:name, :id), {include_blank: "ラベルを選択"}, class: "form-control col-4"
 
           = form.submit "検索する", class: "btn btn-outline-success col-2"
-
-      = link_to '期限順に並べる', '?sort_deadline=true', class: "btn btn-warning col-md-6  col-lg-2 offset-lg-1"
-      = link_to '優先度の高い順で並べる', '?sort_priority=true', class: "btn btn-info col-md-6 col-lg-3"
+      = link_to '期限順に並べる', sort_deadline_params, class: "btn btn-warning col-md-6  col-lg-2 offset-lg-1"
+      = link_to '優先度の高い順で並べる', sort_priority_params, class: "btn btn-info col-md-6 col-lg-3"
 
 
 table class="table"
@@ -37,17 +36,14 @@ table class="table"
       th scope="col" colspan="3"
 
   tbody
-    - @tasks.includes(:labels,:task_labels).each do |task|
+    - @tasks.each do |task|
       tr class="task_row"
         td = task.title
-        td = task.content.truncate(10)
-        td = task.deadline.strftime("%Y年%m月%d日 %H時%M分")
+        td = task.content.truncate(15)
+        td = task.deadline_strftime
         td = task.status_i18n
         td = task.priority_i18n
-        td
-          - task.labels.each do |label|
-            span = label.name
-            br
+        td = task.label_name
         td = task.user.name
         - unless @flag
           td = link_to '詳細', task

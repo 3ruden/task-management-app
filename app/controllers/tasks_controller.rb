@@ -18,13 +18,10 @@ class TasksController < ApplicationController
       @tasks = @tasks.order(created_at: :DESC)
     end
 
-    if params[:task]
-      title = params[:task][:title_search]
-      status = params[:task][:status_search]
-      label_id = params[:task][:label_id]
-      @tasks = @tasks.search_result(title, status, label_id, params[:page])
-    end
-
+    title = params[:title_search]
+    status = params[:status_search]
+    label_id = params[:label_id]
+    @tasks = @tasks.search_result(title, status, label_id, params[:page])
   end
 
   def show

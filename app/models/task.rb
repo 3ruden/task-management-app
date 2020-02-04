@@ -23,7 +23,8 @@ class Task < ApplicationRecord
     get_search_title(title_search).
     get_search_status(status_search).
     get_search_label(label_id).
-    page10(page_params)
+    page10(page_params).
+    includes(:labels, :task_labels)
   }
 
   scope :page10, -> (page_params) {
@@ -33,6 +34,14 @@ class Task < ApplicationRecord
   scope :seen_by_admin, -> (user_id_params, page_params) {
     where(user_id: user_id_params).page10(page_params).includes(:user)
   }
+
+  def deadline_strftime
+    self.deadline.strftime("%Y年%m月%d日 %H時%M分")
+  end
+
+  def label_name
+    self.labels.count < 2 ? self.labels.first.try(:name) : self.labels.first.name + '...'
+  end
 
   belongs_to :user
   has_many :task_labels, dependent: :destroy

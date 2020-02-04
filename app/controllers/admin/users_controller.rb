@@ -49,7 +49,7 @@ class Admin::UsersController < ApplicationController
   private
 
   def admin_user
-    redirect_to root_path unless current_user.is_admin_user?
+    redirect_to root_path unless current_user.try(:admin?)
   end
 
   def user_params
@@ -57,7 +57,8 @@ class Admin::UsersController < ApplicationController
       :name,
       :email,
       :password,
-      :password_confirmation, :admin
+      :password_confirmation,
+      :admin,
     )
   end
 
