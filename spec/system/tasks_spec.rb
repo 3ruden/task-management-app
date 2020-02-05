@@ -7,10 +7,22 @@ def visit_with_http_auth(path)
 end
 
 RSpec.describe 'タスク管理機能', type: :system do
+  let(:login_user){ FactoryBot.create(:user) }
+  let(:task){ FactoryBot.create(:task, user:login_user)}
+
+  before do
+    FactoryBot.create(:label)
+    @label_id = Label.find_by(name: '仮ラベル').id
+    task.label_ids = [@label_id]
+    FactoryBot.create(:second_task, user: login_user)
+    visit_with_http_auth root_path
+    fill_in 'session_email', with: login_user.email
+    fill_in 'session_password', with: login_user.password
+    click_on 'ログインする'
+  end
+
   describe 'タスク一覧画面' do
     before do
-      FactoryBot.create(:task)
-      FactoryBot.create(:second_task)
       visit_with_http_auth tasks_path
     end
 
@@ -64,12 +76,24 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).not_to have_content 'test2'
       end
     end
+
+    context 'タスクをラベルで検索した場合' do
+      it '検索したラベルがついているタスクのみが表示される' do
+        select '仮ラベル', from: 'task_label_id'
+        click_on '検索する'
+        expect(page).to have_content 'テストを書く'
+        expect(page).not_to have_content 'test2'
+      end
+    end
   end
 
   describe 'タスク登録画面' do
-    context '必要項目を入力して、createボタンを押した場合' do
+    before do
+      visit_with_http_auth new_task_path
+    end
+
+    context '必要項目を入力して、登録するボタンを押した場合' do
       it 'データが保存されること' do
-        visit_with_http_auth new_task_path
         # タスク入力フォームにタスク内容が入力する
         fill_in 'タスク名', with: 'createtest'
         fill_in 'タスク詳細', with: 'createtest'
@@ -82,16 +106,29 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content 'タスクを作成しました'
       end
     end
+
+    context 'ラベルのチェックボックスにチェックして登録ボタンを押した時' do
+      it 'ラベルも登録されている' do
+        fill_in 'タスク名', with: 'labeltest'
+        fill_in 'タスク詳細', with: 'labeltest'
+        fill_in '終了期限', with: Time.current
+        choose 'task_status_finished'
+        choose 'task_priority_high'
+        check "task_label_ids_#{@label_id}"
+        click_on '登録する'
+        expect(page).to have_content '仮ラベル'
+      end
+    end
   end
 
   describe 'タスク詳細画面' do
-     let(:showtask){ FactoryBot.create(:task, title: 'showtest') }
+    let(:showtask){ FactoryBot.create(:task, title: 'showtest', user: login_user) }
 
-     context '任意のタスク詳細画面に遷移した場合' do
-       it '該当タスクの内容が表示されたページに遷移すること' do
-         visit task_path(showtask)
-         expect(page).to have_content 'showtest'
-       end
-     end
+    context '任意のタスク詳細画面に遷移した場合' do
+      it '該当タスクの内容が表示されたページに遷移すること' do
+        visit task_path(showtask)
+        expect(page).to have_content 'showtest'
+      end
+    end
   end
 end

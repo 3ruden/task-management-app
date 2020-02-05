@@ -4,10 +4,10 @@ class TasksController < ApplicationController
 
   def index
     if params[:user_id]
-      @tasks = Task.where(user_id: params[:user_id]).includes(:user).page(params[:page]).per(5)
+      @tasks = Task.seen_by_admin(params[:user_id], params[:page])
       @flag = true
     else
-      @tasks = current_user.tasks.all.page(params[:page]).per(5)
+      @tasks = current_user.tasks.page10(params[:page])
     end
 
     if params[:sort_deadline]
@@ -18,12 +18,10 @@ class TasksController < ApplicationController
       @tasks = @tasks.order(created_at: :DESC)
     end
 
-    if params[:task]
-      title_search = params[:task][:title_search]
-      status_search = params[:task][:status_search]
-      @tasks = @tasks.get_search_result(title_search, status_search)
-    end
-
+    title = params[:title_search]
+    status = params[:status_search]
+    label_id = params[:label_id]
+    @tasks = @tasks.search_result(title, status, label_id, params[:page])
   end
 
   def show
@@ -71,6 +69,7 @@ class TasksController < ApplicationController
       :deadline,
       :status,
       :priority,
+      label_ids: [],
     )
   end
 

@@ -28,7 +28,13 @@ table class="table"
 
   tr
     th scope="row"  作成者
-    td = 'testman'
+    td = @task.user.name
+
+  tr
+    th scope="row" ラベル
+    td
+      - @task.labels.each do |label|
+        span class="mr-2" = label.name
 
 = link_to '編集', edit_task_path(@task)
 span &nbsp;|&nbsp;

@@ -12,10 +12,13 @@ class User < ApplicationRecord
   has_many :tasks, dependent: :destroy
 
   before_destroy do
-    throw :abort if User.where(admin: true).count == 1 && self.admin
+    throw :abort if User.where(admin: true).count < 2 && self.admin
   end
 
-  def admin_last_one?(params_admin)
-    User.where(admin: true).count == 1 && self.admin && ActiveRecord::Type::Boolean.new.cast(params_admin).blank?
+  after_update do
+    if User.where(admin: true).count < 1
+      self.errors.add(:admin, 'を削除できません')
+      raise ActiveRecord::Rollback
+    end
   end
 end
