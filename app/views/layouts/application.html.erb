@@ -19,12 +19,12 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <% if logged_in? %>
+              <% if current_user.admin? %>
+              <li class="nav-item"><%= link_to "タスク", tasks_path, class: 'nav-link' %></li>
+              <li class="nav-item"><%= link_to "ラベル", labels_path, class: 'nav-link' %></li>
+                <li class="nav-item"><%= link_to "管理者ページ", admin_users_path, class: 'nav-link' %></li>
               <li class="nav-item"><%= link_to "マイページ", user_path(current_user.id), class: 'nav-link' %></li>
               <li class="nav-item"><%= link_to "ログアウト", session_path(current_user.id), method: :delete, class: 'nav-link'%></li>
-              <li class="nav-item"><%= link_to "タスク一覧", tasks_path, class: 'nav-link' %></li>
-              <li class="nav-item"><%= link_to "ラベル一覧", labels_path, class: 'nav-link' %></li>
-              <% if current_user.admin? %>
-                <li class="nav-item"><%= link_to "ユーザー一覧", labels_path, class: 'nav-link' %></li>
               <% end %>
             <% else %>
               <li class="nav-item"><%= link_to "新規登録", new_user_path, class: 'nav-link' %></li>
