@@ -1,0 +1,16 @@
+= form_with(model: @label, local: true) do |form|
+  - if @label.errors.present?
+    .alert.alert-danger.alert-dismissible role="alert"
+      |<h3>#{@label.errors.count}件のエラーがあります。</h3>
+      ul
+        - @label.errors.full_messages.each do |message|
+          li = message
+
+  .form-group
+    legend class="mt-2"
+      | ラベル「#{@label.name}」を編集・削除
+    = form.text_field :name, class: 'form-control'
+
+  = form.submit class: 'btn btn-outline-success'
+
+  = link_to "このラベル(#{@label.name})を削除", @label, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'ml-3 btn btn-outline-danger'

@@ -1,7 +1,7 @@
 = form_with(model: task, local: true) do |form|
   - if task.errors.present?
-    .alert.alert-danger.alert-dismissible role="alert"
-      |<h2>#{task.errors.count}件のエラーがあります。</h2>
+    .alert.alert-danger.alert-dismissible.mt-3 role="alert"
+      |<h3>#{task.errors.count}件のエラーがあります。</h3>
       ul
         - task.errors.full_messages.each do |message|
           li = message
@@ -54,4 +54,4 @@
 
   = form.submit class: 'btn btn-outline-success'
 
-= link_to 'タスク一覧へ戻る', tasks_path
+= link_to 'タスク一覧へ戻る', tasks_path, class: 'd-block mt-3'
