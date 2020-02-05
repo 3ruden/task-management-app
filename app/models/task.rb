@@ -36,7 +36,8 @@ class Task < ApplicationRecord
   }
 
   scope :around_deadline, -> {
-    where(['deadline <= ?', Time.current.next_day.end_of_day])
+    where(['deadline <= ?', Time.current.next_day.end_of_day]).
+    where.not(status: 'finished')
   }
 
   def deadline_strftime
