@@ -35,8 +35,16 @@ class Task < ApplicationRecord
     where(user_id: user_id_params).page10(page_params).includes(:user)
   }
 
+  scope :around_deadline, -> {
+    where(['deadline <= ?', Time.current.next_day.end_of_day])
+  }
+
   def deadline_strftime
     self.deadline.strftime("%Y年%m月%d日 %H時%M分")
+  end
+
+  def deadline_to_date
+    self.deadline.to_date.strftime("%Y年%m月%d日")
   end
 
   def label_name

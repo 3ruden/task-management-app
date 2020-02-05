@@ -10,6 +10,8 @@ class TasksController < ApplicationController
       @tasks = current_user.tasks.page10(params[:page])
     end
 
+    @around_deadline_tasks = @tasks.around_deadline
+
     if params[:sort_deadline]
       @tasks = @tasks.order(:deadline)
     elsif params[:sort_priority]

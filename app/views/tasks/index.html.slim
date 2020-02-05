@@ -13,6 +13,13 @@
 - else
   = link_to 'タスクを作成する', new_task_path, class: 'd-block mt-3'
 
+  - if @around_deadline_tasks.present?
+    .alert.alert-warning role="alert"
+      h4 class="mb-2" 期限1日前、もしくは期限切れのタスクがあります
+      ul
+        - @around_deadline_tasks.each do |task|
+          li = link_to "タスク名: #{task.title} 終了期限: #{task.deadline_to_date}", task
+
   .container
     .row.mt-3
       = form_with(url: tasks_path, local: true, method: :get, html: {class: "col-md-12 col-lg-6"}) do |form|
@@ -45,7 +52,7 @@ table class="table"
       tr class="task_row"
         td = task.title
         td = task.content.truncate(15)
-        td = task.deadline_strftime
+        td = task.deadline_to_date
         td = task.status_i18n
         td = task.priority_i18n
         td = task.label_name
