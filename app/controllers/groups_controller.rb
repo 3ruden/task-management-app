@@ -21,7 +21,7 @@ class GroupsController < ApplicationController
     params['group']['user_ids'] = [current_user.id]
     @group = Group.new(group_params)
     if @group.save
-      @group_user = current_user.group_users.find_by(group_id: @group.id)
+      @group_user = view_context.group_user_current_id(@group.id)
       @group_user.update(owner: true)
       redirect_to @group, notice: 'グループを作成しました'
     else
