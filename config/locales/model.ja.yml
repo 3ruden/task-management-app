@@ -4,6 +4,7 @@ ja:
       task: タスク
       user: ユーザー
       label: ラベル
+      group: グループ
     attributes:
       task:
         title: タスク名
@@ -21,6 +22,9 @@ ja:
         admin: 管理者権限
       label:
         name: ラベル名
+      group:
+        name: グループ名
+        content: グループの説明
   enums:
     task:
       status:

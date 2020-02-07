@@ -1,0 +1,29 @@
+- if notice.present?
+  .alert.alert-info.mt-4
+    h4 = notice
+
+h1 class="mt-3" グループ一覧
+
+= link_to 'グループを作成する', new_group_path, class: 'd-block mt-4'
+
+table class="table mt-3"
+  thead
+    tr
+      th scope="col" グループ名
+      th scope="col" colspan="3"
+
+  tbody
+    - @groups.each do |group|
+      tr
+        td = group.name
+        - if group_user_current_id(group.id).present?
+          td = link_to '詳細', group
+        - if group_user_current_id(group.id).try(:owner?)
+          td = link_to '編集', edit_group_path(group)
+          td = link_to '削除', group, method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }
+        - else
+          td colspan="5"
+            - if group_user_current_id(group.id).present?
+              = link_to 'グループを離脱する', group_user_path(group), method: :delete, data: { confirm: "#{group.name}を離脱しますか？"}
+            - else
+              = button_to 'グループに参加する', group_users_path, params: {group_id: group.id}, data: { confirm: "#{group.name}に参加しますか？" }, class: 'btn btn-link'

@@ -1,0 +1,38 @@
+- if notice.present?
+  .alert.alert-success.mt-4
+    h3 = notice
+
+h1 class="mb-3" = @group.name
+
+h4 class="mb-3" このグループの説明
+p class="mb-3" = @group.content
+
+table class="table"
+  thead
+    tr
+      th scope="col" タスク名
+      th scope="col" タスク詳細
+      th scope="col" 終了期限
+      th scope="col" 状態
+      th scope="col" 優先順位
+      th scope="col" ラベル
+      th scope="col" 作成者
+      th scope="col" colspan="3"
+
+  tbody
+    - @tasks.each do |task|
+      tr class="task_row"
+        td = task.title
+        td = task.content.truncate(15)
+        td = task.deadline_to_date
+        td = task.status_i18n
+        td = task.priority_i18n
+        td = task.label_name
+        td = task.user.name
+        td = link_to '詳細', task
+        - if group_user_current_id(@group.id).try(:owner?)
+          td = link_to '編集', edit_task_path(task)
+          td = link_to '削除', task, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }
+
+  = paginate @tasks
+

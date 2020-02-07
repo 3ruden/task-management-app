@@ -10,6 +10,8 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }, on: :create
 
   has_many :tasks, dependent: :destroy
+  has_many :group_users, dependent: :destroy
+  has_many :groups, through: :group_users, source: :group
 
   before_destroy do
     throw :abort if User.where(admin: true).count < 2 && self.admin
