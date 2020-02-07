@@ -21,6 +21,7 @@
             <% if logged_in? %>
               <li class="nav-item"><%= link_to "タスク", tasks_path, class: 'nav-link' %></li>
               <li class="nav-item"><%= link_to "ラベル", labels_path, class: 'nav-link' %></li>
+              <li class="nav-item"><%= link_to "グループ", groups_path, class: 'nav-link' %></li>
               <% if current_user.admin? %>
                 <li class="nav-item"><%= link_to "管理者ページ", admin_users_path, class: 'nav-link' %></li>
               <% end %>

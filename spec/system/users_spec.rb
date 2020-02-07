@@ -1,11 +1,4 @@
 require 'rails_helper'
-
-def visit_with_http_auth(path)
-  username = ENV['BASIC_AUTH_NAME']
-  password = ENV['BASIC_AUTH_PASSWORD']
-  visit "http://#{username}:#{password}@#{Capybara.current_session.server.host}:#{Capybara.current_session.server.port}#{path}"
-end
-
 RSpec.describe 'ユーザー機能', type: :system do
   let(:user1){ FactoryBot.create(:user) }
   let(:user2){ FactoryBot.create(:second_user)}

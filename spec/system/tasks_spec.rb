@@ -1,11 +1,5 @@
 require 'rails_helper'
 
-def visit_with_http_auth(path)
-  username = ENV["BASIC_AUTH_NAME"]
-  password = ENV["BASIC_AUTH_PASSWORD"]
-  visit "http://#{username}:#{password}@#{Capybara.current_session.server.host}:#{Capybara.current_session.server.port}#{path}"
-end
-
 RSpec.describe 'タスク管理機能', type: :system do
   let(:login_user){ FactoryBot.create(:user) }
   let(:task){ FactoryBot.create(:task, user:login_user)}
@@ -60,7 +54,7 @@ RSpec.describe 'タスク管理機能', type: :system do
 
     context 'タスク名を検索した場合' do
       it '検索したタスク名のみのレコードが表示される' do
-        fill_in 'task_title_search', with: 'テストを書く'
+        fill_in 'title_search', with: 'テストを書く'
         click_on '検索する'
         expect(page).to have_content 'テストを書く'
         expect(page).not_to have_content 'test2'
@@ -69,7 +63,7 @@ RSpec.describe 'タスク管理機能', type: :system do
 
     context 'タスクの状態を検索した場合' do
       it '検索したタスクの状態のみのレコードが表示される' do
-        select '完了', from: 'task_status_search'
+        select '完了', from: 'status_search'
         click_on '検索する'
         task_list = all('.task_row')
         expect(task_list[0]).to have_content '完了'
@@ -79,7 +73,7 @@ RSpec.describe 'タスク管理機能', type: :system do
 
     context 'タスクをラベルで検索した場合' do
       it '検索したラベルがついているタスクのみが表示される' do
-        select '仮ラベル', from: 'task_label_id'
+        select '仮ラベル', from: 'label_id'
         click_on '検索する'
         expect(page).to have_content 'テストを書く'
         expect(page).not_to have_content 'test2'

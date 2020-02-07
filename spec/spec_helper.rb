@@ -1,11 +1,14 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
 require 'capybara/rspec'
+require 'support/utilities.rb'
 
 RSpec.configure do |config|
   config.before(:each, type: :system) do
     driven_by :selenium_chrome
   end
+
+  config.include(Utilities, :type => :system)
 
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
