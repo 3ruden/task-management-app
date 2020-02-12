@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i(show edit update destroy)
+  before_action :set_task, only: %i(show edit update destroy ensure_correct_user)
   before_action :authenticate_user
   before_action :ensure_correct_user, only: %i(edit update destroy)
 
@@ -28,7 +28,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    Read.create(task_id: @task.id, user_id: current_user.id) if Read.where(task_id: @task.id).find_by(user_id: current_user.id).blank?
+    Read.create(task_id: @task.id, user_id: current_user.id) if Read.missing_record?(@task.id, current_user.id)
   end
 
   def new
@@ -78,7 +78,6 @@ class TasksController < ApplicationController
   end
 
   def ensure_correct_user
-    @task = Task.find(params[:id])
     redirect_to root_url unless @task.user_id == current_user.id
   end
 

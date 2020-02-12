@@ -31,7 +31,7 @@ table class="table"
         td = task.label_name
         td = task.user.name
         - unless task.user_id == current_user.id
-          td = Read.where(task_id: task.id).find_by(user_id: current_user.id).present? ? '既読' : '未読'
+          td = Read.missing_record?(task.id, current_user.id) ? '未読' : '既読'
         - else
           td colspan="1"
         - if task.user_id == current_user.id
