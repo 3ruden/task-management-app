@@ -17,6 +17,7 @@ table class="table"
       th scope="col" 優先順位
       th scope="col" ラベル
       th scope="col" 作成者
+      th scope="col" 既読・未読
       th scope="col" colspan="3"
 
   tbody
@@ -29,10 +30,16 @@ table class="table"
         td = task.priority_i18n
         td = task.label_name
         td = task.user.name
-        td = link_to '詳細', task
-        - if group_user_current_id(@group.id).try(:owner?)
+        - unless task.user_id == current_user.id
+          td = Read.where(task_id: task.id).find_by(user_id: current_user.id).present? ? '既読' : '未読'
+        - else
+          td colspan="1"
+        - if task.user_id == current_user.id
+          td = link_to 'タスク詳細', task
           td = link_to '編集', edit_task_path(task)
           td = link_to '削除', task, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }
+        - else
+          td colspan="3" = link_to 'タスク詳細', task
 
   = paginate @tasks
 
