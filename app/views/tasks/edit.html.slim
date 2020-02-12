@@ -1,7 +1,7 @@
 h1 class="mt-3" 編集
 
 = render 'form', task: @task
-
-= link_to '詳細', @task
-span &nbsp;|&nbsp;
-= link_to 'タスク一覧へ戻る', tasks_path
+.mt-3.mb-3
+  = link_to '詳細', @task
+  span &nbsp;|&nbsp;
+  = link_to '戻る', :back

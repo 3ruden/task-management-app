@@ -36,6 +36,7 @@ table class="table"
       - @task.labels.each do |label|
         span class="mr-2" = label.name
 
-= link_to '編集', edit_task_path(@task)
-span &nbsp;|&nbsp;
-= link_to 'タスク一覧へ戻る', tasks_path
+- if @task.user_id == current_user.id
+  = link_to '編集', edit_task_path(@task)
+  span &nbsp;|&nbsp;
+= link_to '戻る', :back

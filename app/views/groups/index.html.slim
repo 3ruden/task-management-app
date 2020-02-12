@@ -17,7 +17,7 @@ table class="table mt-3"
       tr
         td = group.name
         - if group_user_current_id(group.id).present?
-          td = link_to '詳細', group
+          td = link_to 'グループ詳細', group
         - if group_user_current_id(group.id).try(:owner?)
           td = link_to '編集', edit_group_path(group)
           td = link_to '削除', group, method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }
